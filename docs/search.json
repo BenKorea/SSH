@@ -1,0 +1,128 @@
+[
+  {
+    "objectID": "SSH.html",
+    "href": "SSH.html",
+    "title": "GitHub SSH 설",
+    "section": "",
+    "text": "Git 설치 시 옵션으로 설치되어 있습니다."
+  },
+  {
+    "objectID": "SSH.html#openssh의-설치",
+    "href": "SSH.html#openssh의-설치",
+    "title": "GitHub SSH 설",
+    "section": "",
+    "text": "Git 설치 시 옵션으로 설치되어 있습니다."
+  },
+  {
+    "objectID": "SSH.html#원도우에서-기존키의-제거",
+    "href": "SSH.html#원도우에서-기존키의-제거",
+    "title": "GitHub SSH 설",
+    "section": "원도우에서 기존키의 제거",
+    "text": "원도우에서 기존키의 제거\n\n키를 새로 만드는 경우에는 상관없지만 기존키를 삭제해야 한다면 아래와 같이 진행합니다.\nC:&lt;YourUsername&gt;.ssh 디렉토리에 있는 id_rsa 및 id_rsa.pub 파일을 수동으로 삭제합니다."
+  },
+  {
+    "objectID": "SSH.html#새로운-키의-생성",
+    "href": "SSH.html#새로운-키의-생성",
+    "title": "GitHub SSH 설",
+    "section": "새로운 키의 생성",
+    "text": "새로운 키의 생성\n\nGit 설치매뉴얼 중 다음을 참고하였습니다 https://git-scm.com/book/ko/v2/Git-%ec%84%9c%eb%b2%84-SSH-%ea%b3%b5%ea%b0%9c%ed%82%a4-%eb%a7%8c%eb%93%a4%ea%b8%b0\nssh-keygen 이라는 프로그램으로 키를 생성해야 합니다.\n이 파일은 C:Files위치하므로 git-bash를 열어서 여기로 이동하여야 합니다.\nbash에서 ssh-keygen 프로그램을 실행하면\n\n설치경로는 기본값으로 진행하고\npassphrase는 empty로 하면 원격접속시에 비밀번호를 묻지 않게 되므로 empty로 설정하여 진행합니다.\n\nC:&lt;YourUsername&gt;.ssh가 생성되면서 id_ed25519와 id_ed25519.pub 파일이 생성됩니다.\n\n이 중 *.pub가 공개키입니다."
+  },
+  {
+    "objectID": "SSH.html#ssh-agent-확인하기",
+    "href": "SSH.html#ssh-agent-확인하기",
+    "title": "GitHub SSH 설",
+    "section": "SSH agent 확인하기",
+    "text": "SSH agent 확인하기\n\n원도우의 경우 서비스창에서 OPenSSH Authentication Agent가 시행중인지 확인합니다.\nbash 창에서 아래의 명령을 입력해도 됩니다. ssh-agent가 실행중인지 확인합니다."
+  },
+  {
+    "objectID": "SSH.html#gitgub에-공개키-등록하기",
+    "href": "SSH.html#gitgub에-공개키-등록하기",
+    "title": "GitHub SSH 설",
+    "section": "Gitgub에 공개키 등록하기",
+    "text": "Gitgub에 공개키 등록하기\n\nGitHub에 로그인한 후 오른쪽 상단의 프로필 아이콘을 클릭하고 Settings를 선택합니다.\n왼쪽 메뉴에서 SSH and GPG keys를 선택합니다.\nNew SSH key 버튼을 클릭합니다.\nTitle에는 키의 제목을 입력합니다.\nKey에는 id_ed25519.pub 파일의 내용을 복사하여 붙여넣습니다.\nAdd SSH key 버튼을 클릭합니다."
+  },
+  {
+    "objectID": "SSH.html#ssh-url로-변경",
+    "href": "SSH.html#ssh-url로-변경",
+    "title": "GitHub SSH 설",
+    "section": "SSH URL로 변경",
+    "text": "SSH URL로 변경\n\n기존의 HTTPS URL을 SSH URL로 변경합니다.\n원격저장소의 HTTPS 옆에 있으므로 복사해서 git remote add origin 명령을 통하면됩니다."
+  },
+  {
+    "objectID": "SSH.html#gitgub-연결-테스트",
+    "href": "SSH.html#gitgub-연결-테스트",
+    "title": "GitHub SSH 설",
+    "section": "Gitgub 연결 테스트",
+    "text": "Gitgub 연결 테스트\n\nbash창에서 아래의 명령을 입력합니다.\n\nssh -T git@github.com\n\n처음 연결시에 “This key is not known by any other names”라는 메시지가 나오는데 yes를 입력합니다."
+  },
+  {
+    "objectID": "SSH.html#기존-프로토콜의-한계",
+    "href": "SSH.html#기존-프로토콜의-한계",
+    "title": "GitHub SSH 설",
+    "section": "2.1 기존 프로토콜의 한계",
+    "text": "2.1 기존 프로토콜의 한계\n\nTelnet, FTP 등 초기 원격 접속 및 파일 전송 프로토콜은 데이터를 평문으로 전송하여 보안 위협에 노출.\n주요 문제:\n\n도청: 네트워크 트래픽을 감시하여 비밀번호 및 데이터를 탈취.\n중간자 공격: 공격자가 통신 내용을 가로채거나 수정.\n\n\n\n2.2 SSH의 탄생\n\n1995년 핀란드 암호학자 타투 이흐티넨(Tatu Ylönen)이 SSH-1 개발.\n1999년에는 SSH-2가 발표되어 현재 표준으로 사용."
+  },
+  {
+    "objectID": "SSH.html#ssh-작동-원리",
+    "href": "SSH.html#ssh-작동-원리",
+    "title": "GitHub SSH 설",
+    "section": "3. SSH 작동 원리",
+    "text": "3. SSH 작동 원리\n\n3.1 암호화와 인증\n\n대칭키 암호화:\n\n클라이언트와 서버 간 통신 데이터 암호화.\nAES, ChaCha20 같은 알고리즘 사용.\n\n비대칭키 암호화:\n\n공개 키(서버)와 개인 키(클라이언트) 쌍을 이용한 인증.\nRSA, Ed25519, ECDSA 알고리즘.\n\n해시 함수:\n\n데이터 무결성 검증.\nSHA-2, SHA-3 사용.\n\n\n\n\n3.2 SSH 통신 과정\n\n클라이언트가 서버에 접속 요청.\n서버가 공개 키를 제공.\n클라이언트가 서버의 신원을 확인.\n클라이언트가 개인 키를 이용해 인증.\n암호화된 채널을 생성하여 안전한 통신 시작."
+  },
+  {
+    "objectID": "SSH.html#ssh-키-확인",
+    "href": "SSH.html#ssh-키-확인",
+    "title": "GitHub SSH 설",
+    "section": "4. SSH 키 확인",
+    "text": "4. SSH 키 확인\n\nGit bash에서 SSH 키가 생성되어 있는지 확인하는 방법이 있습니다.\n\nls -al ~/.ssh\n\n출력 결과:\n\nid_rsa 및 id_rsa.pub 파일이 있다면 이미 SSH 키가 생성된 상태입니다.\n파일이 없다면 다음 단계에서 새로 생성합니다.\n\n원도우의 경우 사용자 폴더에 .ssh 폴더가 생성되어 있습니다."
+  },
+  {
+    "objectID": "SSH.html#ssh-키-생성",
+    "href": "SSH.html#ssh-키-생성",
+    "title": "GitHub SSH 설",
+    "section": "5. SSH 키 생성",
+    "text": "5. SSH 키 생성\n새로운 SSH 키를 생성합니다.\nssh-keygen -t ed25519 -C \"your_email@example.com\"\n\n옵션 설명:\n\n-t ed25519: SSH 키의 알고리즘(권장: ed25519)\n-C \"your_email@example.com\": 키에 추가될 주석 (GitHub 계정 이메일 추천)\n\n명령 실행 후:\n\n저장 위치를 묻는 경우 기본 경로(~/.ssh/id_ed25519)를 유지.\n암호를 설정하거나 그냥 Enter를 눌러 건너뛸 수 있습니다."
+  },
+  {
+    "objectID": "SSH.html#ssh-키-확인-및-복사",
+    "href": "SSH.html#ssh-키-확인-및-복사",
+    "title": "GitHub SSH 설",
+    "section": "6. SSH 키 확인 및 복사",
+    "text": "6. SSH 키 확인 및 복사\nSSH 키를 확인하고 GitHub에 추가하기 위해 공개 키를 복사합니다.\ncat ~/.ssh/id_ed25519.pub\n\n출력된 공개 키를 복사합니다."
+  },
+  {
+    "objectID": "SSH.html#github에-ssh-키-추가",
+    "href": "SSH.html#github에-ssh-키-추가",
+    "title": "GitHub SSH 설",
+    "section": "4. GitHub에 SSH 키 추가",
+    "text": "4. GitHub에 SSH 키 추가\n\nGitHub 계정에 로그인합니다.\n오른쪽 상단 프로필 아이콘 → Settings를 클릭합니다.\n왼쪽 메뉴에서 SSH and GPG keys를 선택합니다.\nNew SSH key 버튼을 클릭합니다.\nTitle: 키의 제목을 입력합니다 (예: My Laptop).\nKey: 복사한 공개 키 내용을 붙여넣습니다.\nAdd SSH key 버튼을 클릭합니다."
+  },
+  {
+    "objectID": "SSH.html#ssh-연결-테스트",
+    "href": "SSH.html#ssh-연결-테스트",
+    "title": "GitHub SSH 설",
+    "section": "5. SSH 연결 테스트",
+    "text": "5. SSH 연결 테스트\nSSH 설정이 올바른지 확인합니다.\nssh -T git@github.com\n\n출력 결과:\n\n“Hi &lt;username&gt;! You’ve successfully authenticated, but GitHub does not provide shell access.”가 나오면 성공입니다.\n오류가 발생하면 아래의 문제 해결 단락을 참조하세요."
+  },
+  {
+    "objectID": "SSH.html#github-저장소에-ssh로-연결",
+    "href": "SSH.html#github-저장소에-ssh로-연결",
+    "title": "GitHub SSH 설",
+    "section": "6. GitHub 저장소에 SSH로 연결",
+    "text": "6. GitHub 저장소에 SSH로 연결\nSSH 방식으로 저장소를 복제하거나 기존 HTTPS 연결을 SSH로 변경합니다.\n\n저장소 복제 (SSH 방식)\ngit clone git@github.com:&lt;username&gt;/&lt;repository&gt;.git\n\n\n기존 HTTPS 연결을 SSH로 변경\n\n현재 원격 URL 확인:\ngit remote -v\nURL 변경:\ngit remote set-url origin git@github.com:&lt;username&gt;/&lt;repository&gt;.git\n변경 확인:\ngit remote -v"
+  },
+  {
+    "objectID": "SSH.html#문제-해결",
+    "href": "SSH.html#문제-해결",
+    "title": "GitHub SSH 설",
+    "section": "7. 문제 해결",
+    "text": "7. 문제 해결\n\nSSH 에이전트 실행\nSSH 에이전트가 실행 중인지 확인하고 SSH 키를 추가합니다.\neval \"$(ssh-agent -s)\"\nssh-add ~/.ssh/id_ed25519\n\n\n퍼미션 오류 해결\nSSH 디렉토리 및 파일의 권한을 확인하고 수정합니다.\nchmod 700 ~/.ssh\nchmod 600 ~/.ssh/id_ed25519\nchmod 644 ~/.ssh/id_ed25519.pub\n\n\nGitHub에서 차단된 키\nGitHub에서 키가 차단되었다면 새로 생성한 키를 다시 추가해야 합니다."
+  },
+  {
+    "objectID": "SSH.html#실습-결과-작성",
+    "href": "SSH.html#실습-결과-작성",
+    "title": "GitHub SSH 설",
+    "section": "8. 실습 결과 작성",
+    "text": "8. 실습 결과 작성\n\nSSH 키 생성 및 등록 여부 확인.\nGitHub 저장소에 SSH 방식으로 연결 후 파일 푸시 테스트.\n\ngit add .\ngit commit -m \"Test SSH connection\"\ngit push origin main\n\n이 과정을 완료하면 GitHub SSH 연결이 성공적으로 설정됩니다. 반복적으로 필요한 과정을 효율적으로 관리할 수 있습니다."
+  }
+]
