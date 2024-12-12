@@ -8,9 +8,9 @@
 
 <meta name="author" content="BenKorea">
 <meta name="dcterms.date" content="2024-12-11">
-<meta name="description" content="GitHub SSH 키를 생성하고 설정하는 방법을 단계별로 학습하고 실습 내용을 작성합니다.">
+<meta name="description" content="SSH 키를 생성하고 Github에 연결하기">
 
-<title>GitHub SSH 설 – R-4.4.1-SSH</title>
+<title>OpenSSH – R-4.4.1-SSH</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -119,12 +119,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">GitHub SSH 설</h1>
-</div>
+<h1 class="title">OpenSSH</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Tools</div>
+    <div class="quarto-category">SSH</div>
+  </div>
+  </div>
 
 <div>
   <div class="description">
-    GitHub SSH 키를 생성하고 설정하는 방법을 단계별로 학습하고 실습 내용을 작성합니다.
+    SSH 키를 생성하고 Github에 연결하기
   </div>
 </div>
 
@@ -145,6 +149,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
   </div>
   
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">December 11, 2024</p>
+    </div>
+  </div>
     
   </div>
   
@@ -153,6 +163,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<section id="필요성" class="level2">
+<h2 class="anchored" data-anchor-id="필요성">필요성</h2>
+<ul>
+<li>SSH(Secure Shell) 키 기반 인증은 ID &amp; Password 인증에 비해 보안이 강화되고 자동인증으로 편리합니다.</li>
+<li>SSH에는 여러종류가 있지만 여기에서는 Git 설치 시에 bundle로 설치되는 OpenSSH를 사용합니다.</li>
+</ul>
+</section>
 <section id="openssh의-설치" class="level2">
 <h2 class="anchored" data-anchor-id="openssh의-설치">OpenSSH의 설치</h2>
 <ul>
@@ -163,21 +180,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="원도우에서-기존키의-제거">원도우에서 기존키의 제거</h2>
 <ul>
 <li>키를 새로 만드는 경우에는 상관없지만 기존키를 삭제해야 한다면 아래와 같이 진행합니다.</li>
-<li>C:&lt;YourUsername&gt;.ssh&nbsp;디렉토리에 있는 id_rsa 및 id_rsa.pub 파일을 수동으로 삭제합니다.</li>
+<li>C:&lt;YourUsername&gt;.ssh 디렉토리에 있는 개인키(예시 id_rsa) 및 공개키 (예시 id_rsa.pub) 파일들을 수동으로 삭제합니다.</li>
 </ul>
 </section>
 <section id="새로운-키의-생성" class="level2">
 <h2 class="anchored" data-anchor-id="새로운-키의-생성">새로운 키의 생성</h2>
 <ul>
 <li>Git 설치매뉴얼 중 다음을 참고하였습니다 <a href="https://git-scm.com/book/ko/v2/Git-%ec%84%9c%eb%b2%84-SSH-%ea%b3%b5%ea%b0%9c%ed%82%a4-%eb%a7%8c%eb%93%a4%ea%b8%b0" class="uri">https://git-scm.com/book/ko/v2/Git-%ec%84%9c%eb%b2%84-SSH-%ea%b3%b5%ea%b0%9c%ed%82%a4-%eb%a7%8c%eb%93%a4%ea%b8%b0</a></li>
-<li>ssh-keygen 이라는 프로그램으로 키를 생성해야 합니다.</li>
-<li>이 파일은 C:Files위치하므로 git-bash를 열어서 여기로 이동하여야 합니다.</li>
+<li>C:\Program Files\Git\usr\bin\에 위치하는 ssh-keygen.exe를 구동시켜야 하므로 git-bash를 열어서 먼저 이동하여야 합니다.</li>
 <li>bash에서 ssh-keygen 프로그램을 실행하면
 <ul>
 <li>설치경로는 기본값으로 진행하고</li>
 <li>passphrase는 empty로 하면 원격접속시에 비밀번호를 묻지 않게 되므로 empty로 설정하여 진행합니다.</li>
 </ul></li>
-<li>C:&lt;YourUsername&gt;.ssh가 생성되면서 id_ed25519와 id_ed25519.pub 파일이 생성됩니다.<br>
+<li>C:\Users\&lt;YourUsername\&gt;.ssh가 생성되면서 id_ed25519와 id_ed25519.pub 파일이 생성됩니다.<br>
 </li>
 <li>이 중 *.pub가 공개키입니다.</li>
 </ul>
@@ -186,7 +202,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="ssh-agent-확인하기">SSH agent 확인하기</h2>
 <ul>
 <li>원도우의 경우 서비스창에서 OPenSSH Authentication Agent가 시행중인지 확인합니다.</li>
-<li>bash 창에서 아래의 명령을 입력해도 됩니다. ssh-agent가 실행중인지 확인합니다.</li>
+<li>bash 창에서 아래의 명령을 입력해도 됩니다. ssh-agent가 실행중인지 확인합니다.
+<ul>
+<li>Agent 속성을 확인하여 시작유형을 <code>자동</code>으로 설정하셔야 하고</li>
+<li>복구탭에서 첫째, 둘째, 후속 실패시에 대한 조치를 <code>서비스 다시 시작</code>으로 설정해야 합니다.</li>
+</ul></li>
 </ul>
 </section>
 <section id="gitgub에-공개키-등록하기" class="level2">
@@ -200,196 +220,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Add SSH key 버튼을 클릭합니다.</li>
 </ul>
 </section>
-<section id="ssh-url로-변경" class="level2">
-<h2 class="anchored" data-anchor-id="ssh-url로-변경">SSH URL로 변경</h2>
-<ul>
-<li>기존의 HTTPS URL을 SSH URL로 변경합니다.</li>
-<li>원격저장소의 HTTPS 옆에 있으므로 복사해서 git remote add origin 명령을 통하면됩니다.</li>
-</ul>
-</section>
-<section id="gitgub-연결-테스트" class="level2">
-<h2 class="anchored" data-anchor-id="gitgub-연결-테스트">Gitgub 연결 테스트</h2>
+<section id="gitgub-최초연결-설정" class="level2">
+<h2 class="anchored" data-anchor-id="gitgub-최초연결-설정">Gitgub 최초연결 설정</h2>
 <ul>
 <li>bash창에서 아래의 명령을 입력합니다.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-T</span> git@github.com</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>처음 연결시에 “This key is not known by any other names”라는 메시지가 나오는데 yes를 입력합니다.</li>
+<li>“Hi <username>! You’ve successfully authenticated, but GitHub does not provide shell access.”라는 메시지가 나오면 성공입니다.</username></li>
 </ul>
 </section>
-<section id="기존-프로토콜의-한계" class="level2">
-<h2 class="anchored" data-anchor-id="기존-프로토콜의-한계">2.1 기존 프로토콜의 한계</h2>
+<section id="ssh-url로-변경" class="level2">
+<h2 class="anchored" data-anchor-id="ssh-url로-변경">SSH URL로 변경</h2>
 <ul>
-<li><strong>Telnet, FTP</strong> 등 초기 원격 접속 및 파일 전송 프로토콜은 데이터를 평문으로 전송하여 보안 위협에 노출.</li>
-<li>주요 문제:
-<ol type="1">
-<li><strong>도청</strong>: 네트워크 트래픽을 감시하여 비밀번호 및 데이터를 탈취.</li>
-<li><strong>중간자 공격</strong>: 공격자가 통신 내용을 가로채거나 수정.</li>
-</ol></li>
+<li>기존의 HTTPS URL을 SSH URL로 변경합니다.</li>
+<li>원격저장소의 HTTPS 옆에 있으므로 복사해서 git remote add origin 명령을 통하면됩니다.</li>
+<li>기존의 HTTOS URL을 변경하는 방법은 아래와 같습니다.</li>
 </ul>
-<section id="ssh의-탄생" class="level3">
-<h3 class="anchored" data-anchor-id="ssh의-탄생">2.2 SSH의 탄생</h3>
-<ul>
-<li>1995년 핀란드 암호학자 <strong>타투 이흐티넨(Tatu Ylönen)</strong>이 SSH-1 개발.</li>
-<li>1999년에는 <strong>SSH-2</strong>가 발표되어 현재 표준으로 사용.</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="ssh-작동-원리" class="level2">
-<h2 class="anchored" data-anchor-id="ssh-작동-원리">3. SSH 작동 원리</h2>
-<section id="암호화와-인증" class="level3">
-<h3 class="anchored" data-anchor-id="암호화와-인증">3.1 암호화와 인증</h3>
-<ol type="1">
-<li><strong>대칭키 암호화</strong>:
-<ul>
-<li>클라이언트와 서버 간 통신 데이터 암호화.</li>
-<li>AES, ChaCha20 같은 알고리즘 사용.</li>
-</ul></li>
-<li><strong>비대칭키 암호화</strong>:
-<ul>
-<li>공개 키(서버)와 개인 키(클라이언트) 쌍을 이용한 인증.</li>
-<li>RSA, Ed25519, ECDSA 알고리즘.</li>
-</ul></li>
-<li><strong>해시 함수</strong>:
-<ul>
-<li>데이터 무결성 검증.</li>
-<li>SHA-2, SHA-3 사용.</li>
-</ul></li>
-</ol>
-</section>
-<section id="ssh-통신-과정" class="level3">
-<h3 class="anchored" data-anchor-id="ssh-통신-과정">3.2 SSH 통신 과정</h3>
-<ol type="1">
-<li>클라이언트가 서버에 접속 요청.</li>
-<li>서버가 공개 키를 제공.</li>
-<li>클라이언트가 서버의 신원을 확인.</li>
-<li>클라이언트가 개인 키를 이용해 인증.</li>
-<li>암호화된 채널을 생성하여 안전한 통신 시작.</li>
-</ol>
-</section>
-</section>
-<section id="ssh-키-확인" class="level2">
-<h2 class="anchored" data-anchor-id="ssh-키-확인">4. SSH 키 확인</h2>
-<ul>
-<li>Git bash에서 SSH 키가 생성되어 있는지 확인하는 방법이 있습니다.</li>
-</ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-al</span> ~/.ssh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li><strong>출력 결과</strong>:
-<ul>
-<li><code>id_rsa</code> 및 <code>id_rsa.pub</code> 파일이 있다면 이미 SSH 키가 생성된 상태입니다.</li>
-<li>파일이 없다면 다음 단계에서 새로 생성합니다.</li>
-</ul></li>
-<li>원도우의 경우 사용자 폴더에 <code>.ssh</code> 폴더가 생성되어 있습니다.</li>
-</ul>
-<hr>
-</section>
-<section id="ssh-키-생성" class="level2">
-<h2 class="anchored" data-anchor-id="ssh-키-생성">5. SSH 키 생성</h2>
-<p>새로운 SSH 키를 생성합니다.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-t</span> ed25519 <span class="at">-C</span> <span class="st">"your_email@example.com"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li><strong>옵션 설명</strong>:
-<ul>
-<li><code>-t ed25519</code>: SSH 키의 알고리즘(권장: <code>ed25519</code>)</li>
-<li><code>-C "your_email@example.com"</code>: 키에 추가될 주석 (GitHub 계정 이메일 추천)</li>
-</ul></li>
-<li>명령 실행 후:
-<ul>
-<li>저장 위치를 묻는 경우 기본 경로(<code>~/.ssh/id_ed25519</code>)를 유지.</li>
-<li>암호를 설정하거나 그냥 Enter를 눌러 건너뛸 수 있습니다.</li>
-</ul></li>
-</ul>
-<hr>
-</section>
-<section id="ssh-키-확인-및-복사" class="level2">
-<h2 class="anchored" data-anchor-id="ssh-키-확인-및-복사">6. SSH 키 확인 및 복사</h2>
-<p>SSH 키를 확인하고 GitHub에 추가하기 위해 공개 키를 복사합니다.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> ~/.ssh/id_ed25519.pub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li><strong>출력된 공개 키</strong>를 복사합니다.</li>
-</ul>
-<hr>
-</section>
-<section id="github에-ssh-키-추가" class="level2">
-<h2 class="anchored" data-anchor-id="github에-ssh-키-추가">4. GitHub에 SSH 키 추가</h2>
-<ol type="1">
-<li>GitHub 계정에 로그인합니다.</li>
-<li>오른쪽 상단 <strong>프로필 아이콘</strong> → <strong>Settings</strong>를 클릭합니다.</li>
-<li>왼쪽 메뉴에서 <strong>SSH and GPG keys</strong>를 선택합니다.</li>
-<li><strong>New SSH key</strong> 버튼을 클릭합니다.</li>
-<li><strong>Title</strong>: 키의 제목을 입력합니다 (예: <code>My Laptop</code>).</li>
-<li><strong>Key</strong>: 복사한 공개 키 내용을 붙여넣습니다.</li>
-<li><strong>Add SSH key</strong> 버튼을 클릭합니다.</li>
-</ol>
-<hr>
-</section>
-<section id="ssh-연결-테스트" class="level2">
-<h2 class="anchored" data-anchor-id="ssh-연결-테스트">5. SSH 연결 테스트</h2>
-<p>SSH 설정이 올바른지 확인합니다.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-T</span> git@github.com</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li><strong>출력 결과</strong>:
-<ul>
-<li>“Hi <code>&lt;username&gt;</code>! You’ve successfully authenticated, but GitHub does not provide shell access.”가 나오면 성공입니다.</li>
-<li>오류가 발생하면 아래의 문제 해결 단락을 참조하세요.</li>
-</ul></li>
-</ul>
-<hr>
-</section>
-<section id="github-저장소에-ssh로-연결" class="level2">
-<h2 class="anchored" data-anchor-id="github-저장소에-ssh로-연결">6. GitHub 저장소에 SSH로 연결</h2>
-<p>SSH 방식으로 저장소를 복제하거나 기존 HTTPS 연결을 SSH로 변경합니다.</p>
-<section id="저장소-복제-ssh-방식" class="level3">
-<h3 class="anchored" data-anchor-id="저장소-복제-ssh-방식">저장소 복제 (SSH 방식)</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone git@github.com:<span class="op">&lt;</span>username<span class="op">&gt;</span>/<span class="op">&lt;</span>repository<span class="op">&gt;</span>.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="기존-https-연결을-ssh로-변경" class="level3">
-<h3 class="anchored" data-anchor-id="기존-https-연결을-ssh로-변경">기존 HTTPS 연결을 SSH로 변경</h3>
-<ol type="1">
-<li><p>현재 원격 URL 확인:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote <span class="at">-v</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>URL 변경:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote set-url origin git@github.com:<span class="op">&lt;</span>username<span class="op">&gt;</span>/<span class="op">&lt;</span>repository<span class="op">&gt;</span>.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>변경 확인:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote <span class="at">-v</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-</ol>
-<hr>
-</section>
-</section>
-<section id="문제-해결" class="level2">
-<h2 class="anchored" data-anchor-id="문제-해결">7. 문제 해결</h2>
-<section id="ssh-에이전트-실행" class="level3">
-<h3 class="anchored" data-anchor-id="ssh-에이전트-실행">SSH 에이전트 실행</h3>
-<p>SSH 에이전트가 실행 중인지 확인하고 SSH 키를 추가합니다.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span> <span class="st">"</span><span class="va">$(</span><span class="fu">ssh-agent</span> <span class="at">-s</span><span class="va">)</span><span class="st">"</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-add</span> ~/.ssh/id_ed25519</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="퍼미션-오류-해결" class="level3">
-<h3 class="anchored" data-anchor-id="퍼미션-오류-해결">퍼미션 오류 해결</h3>
-<p>SSH 디렉토리 및 파일의 권한을 확인하고 수정합니다.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 700 ~/.ssh</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 600 ~/.ssh/id_ed25519</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 644 ~/.ssh/id_ed25519.pub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="github에서-차단된-키" class="level3">
-<h3 class="anchored" data-anchor-id="github에서-차단된-키">GitHub에서 차단된 키</h3>
-<p>GitHub에서 키가 차단되었다면 새로 생성한 키를 다시 추가해야 합니다.</p>
-<hr>
-</section>
-</section>
-<section id="실습-결과-작성" class="level2">
-<h2 class="anchored" data-anchor-id="실습-결과-작성">8. 실습 결과 작성</h2>
-<ol type="1">
-<li>SSH 키 생성 및 등록 여부 확인.</li>
-<li>GitHub 저장소에 SSH 방식으로 연결 후 파일 푸시 테스트.</li>
-</ol>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Test SSH connection"</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<hr>
-<p>이 과정을 완료하면 GitHub SSH 연결이 성공적으로 설정됩니다. 반복적으로 필요한 과정을 효율적으로 관리할 수 있습니다.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote set-url origin git@github.com:<span class="op">&lt;</span>username<span class="op">&gt;</span>/<span class="op">&lt;</span>repository<span class="op">&gt;</span>.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
